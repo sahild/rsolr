@@ -17,7 +17,19 @@ class RSolr::Connection::NetHttp
     create_http_context net_http_response, url, path, params
   end
   
+  def get2 path, params={}
+    url = self.build_url path, params
+    net_http_response = self.connection.get url
+    create_http_context net_http_response, url, path, params
+  end
+  
   def post path, data, params={}, headers={}
+    url = self.build_url path, params
+    net_http_response = self.connection.post url, data, headers
+    create_http_context net_http_response, url, path, params, data, headers
+  end
+  
+  def post2 path, data, params={}, headers={}
     url = self.build_url path, params
     net_http_response = self.connection.post url, data, headers
     create_http_context net_http_response, url, path, params, data, headers

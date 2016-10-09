@@ -26,14 +26,14 @@ module RSolr::Connection::Requestable
     data = extra[0]
     # force a POST, use the query string as the POST body
     if opts[:method] == :post and data.to_s.empty?
-      http_context = self.post(path, hash_to_query(params), {}, {'Content-Type' => 'application/x-www-form-urlencoded'})
+      http_context = self.post2(path, hash_to_query(params), {}, {'Content-Type' => 'application/x-www-form-urlencoded'})
     else
       if data
         # standard POST, using "data" as the POST body
-        http_context = self.post(path, data, params, {"Content-Type" => 'text/xml; charset=utf-8'})
+        http_context = self.post2(path, data, params, {"Content-Type" => 'text/xml; charset=utf-8'})
       else
         # standard GET
-        http_context = self.get(path, params)
+        http_context = self.get2(path, params)
       end
     end
     raise RSolr::RequestError.new("Solr Response: #{http_context[:message]}") unless http_context[:status_code] == 200
