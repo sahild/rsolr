@@ -29,6 +29,7 @@ module RSolr::Connection::Requestable
       http_context = self.post2(path, hash_to_query(params), {}, {'Content-Type' => 'application/x-www-form-urlencoded'})
     else
       if data
+        puts "class_name: #{self.method(:post).source_location}"
         # standard POST, using "data" as the POST body
         http_context = self.post2(path, data, params, {"Content-Type" => 'text/xml; charset=utf-8'})
       else
